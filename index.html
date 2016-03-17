@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React-vs-Backbone</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      img[alt="full"]{
+        width: 65%;
+        height: 65%;
+      }
+      img[alt="full-width"]{
+        width: 100%;
+        height: 100%;
+      }
+      .small-icon img {
+        width: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+      class: center, middle
+
+      # React vs Backbone
+
+      ---
+      class: center, middle
+
+      # What is the difference?
+      ---
+      class: center, middle
+
+      # The difference in everything
+
+      <img src="2012-07-17-shadow-dom.jpg"/>
+      ---
+
+      layout: true
+      <div class="center">
+      # Backbone vs React
+      </div>
+      ---
+
+      * ### MVP vs Flux
+
+      ---
+      <div class="center">      
+      # MVP
+      </div>
+      <img src="mvp-diagram.png"/>
+      ---
+      <div class="center">      
+      # Flux
+      </div>
+      <img style="width: 100%;" src="flux-diagram.png"/>
+      ---
+      
+      * ### MVP vs Flux
+      * ### Any template kit vs JSX
+
+      ---
+      <div class="center">      
+      # JSX
+      </div>
+      ```javascript
+      var TodoApp = React.createClass({
+        getInitialState: function() {
+          return {items: [], text: ''};
+        },
+        onChange: function(e) {
+          this.setState({text: e.target.value});
+        },
+        handleSubmit: function(e) {
+          e.preventDefault();
+          var nextItems = this.state.items.concat([{text: this.state.text, id: Date.now()}]);
+          var nextText = '';
+          this.setState({items: nextItems, text: nextText});
+        },
+        render: function() {
+          return (
+            <div>
+              <h3>TODO</h3>
+              <TodoList items={this.state.items} />
+              <form onSubmit={this.handleSubmit}>
+                <input onChange={this.onChange} value={this.state.text} />
+                <button>{'Add #' + (this.state.items.length + 1)}</button>
+              </form>
+            </div>
+          );
+        }
+      });
+
+      ```
+
+      ---
+
+      * ### MVP vs Flux
+      * ### Any template kit vs JSX
+      * ### OOP vs Component oriented acritecture
+
+      ---
+
+      <div class="center">      
+      # OOP
+      </div>
+      ```javascript
+      initStatus: function() {
+            var _this = this;
+
+            var view = new SelectBox({
+                container: this.$el.find('.active-container'),
+                type: 'selectbox',
+                model: this.model,
+                changeSelector: 'active',
+                collection: Supply.get('status')
+            });
+
+            this.subview('status-view', view);
+        },
+      ```
+      ---
+
+      <div class="center">      
+      # Component oriented acritecture
+      </div>
+      ```javascript
+      var CommentBox = React.createClass({
+        render: function() {
+          return (
+            <div className="commentBox">
+              Hello, world! I am a CommentBox.
+            </div>
+          );
+        }
+      });
+      ReactDOM.render(
+        <CommentBox />,
+        document.getElementById('content')
+      );
+      ```
+      ---
+
+      * ### MVP vs Flux
+      * ### Any template kit vs JSX
+      * ### OOP vs COP
+      * ### DOM manipulations vs State machine
+
+      ---
+
+      <div class="center">      
+      # DOM manipulations
+      </div>
+      ```javascript
+      var RowView = Backbone.View.extend({  
+          template: `
+            <button>Show something</button>
+
+            <h1 display="none"> Hello, I am something! </h1>
+          `,
+         //second case
+         events: {
+            "click button": function() {
+              this.$el.find('h1').show();
+            }
+         },
+      ));
+      ```
+      ---
+
+      class: center
+
+      # State machine
+
+      ```javascript
+      class CommentBox extend React.Component{
+        constructor(){
+          this.state = {
+            showSomething: false
+          };
+
+          this.toggleState = this.toggleState.bind(this);
+        }
+        toggleState(){
+          this.setState({
+            showSomething: !!this.state.showSomething
+          });
+        }
+        render() {
+          let {showSomething} = this.state;
+
+          return (
+            <button onClick={this.toggleState}>Show something</button>
+
+            {showSomething && (
+              <h1> Hello, I am something! </h1>
+            )}
+          );
+        }
+      }
+      ```
+      ---
+
+      * ### MVP vs Flux
+      * ### Any template kit vs JSX
+      * ### OOP vs COP
+      * ### DOM manipulations vs State machine
+      * ### Model paterns vs Data flow
+
+      ---
+      layout: false	
+      class: center
+
+      # Data flow live demo
+
+      ---
+
+      * ### MVP vs Flux
+      * ### Any template kit vs JSX
+      * ### OOP vs COP
+      * ### DOM manipulations vs State machine
+      * ### Model paterns vs Data flow
+      * ### Render them all vs Virtual DOM pattern
+      ---
+      class: center
+      # DOM
+
+      <div class="center"> 
+         <img  src="tree-chart.svg">
+      </div>
+      ---
+      layout: false
+
+      <div class="center">      
+      # Virtual DOM
+      </div>
+      <img   src="reactjs-virtual-dom-real-dom.jpg">
+      ---
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
